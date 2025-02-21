@@ -1,25 +1,7 @@
 -- Load the latest version of the Orion library
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
 
--- Base64 encoded key "Karu!100"
-local encodedKey = "S2FydSUhMTAw" -- This is "Karu!100" encoded in Base64
-
--- Function to decode the Base64 encoded key
-local function decodeBase64(input)
-    local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-    input = string.gsub(input, '[^'..b..'=]', '')
-    return (input:gsub('.', function(x)
-        if x == '=' then return '' end
-        local r, bits = '', string.find(b, x) - 1
-        for i = 6, 1, -1 do
-            r = r..(bits % 2 ^ i - bits % 2 ^ (i - 1) // 2 ^ (i - 1))
-        end
-        return r
-    end)):match('^(%d+)$')
-end
-
--- Decode the encoded key
-local correctKey = decodeBase64(encodedKey)
+local correctKey = "Karu!100"
 
 -- Create the key input GUI using Orion
 local Window = OrionLib:MakeWindow({
