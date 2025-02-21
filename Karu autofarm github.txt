@@ -2,6 +2,7 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/jensonhirst/Orion/main/source')))()
 
 local correctKey = "Karu!100"
+local keyLink = "https://lootdest.org/s?09s0SZ7s"  -- The key link
 
 -- Create the key input GUI using Orion
 local Window = OrionLib:MakeWindow({
@@ -54,6 +55,20 @@ Tab:AddButton({
     Callback = function()
         local value = Tab:GetTextbox("Key Input")
         checkKeyInput(value)
+    end
+})
+
+-- Button to copy the key link
+Tab:AddButton({
+    Name = "Copy Key Link",
+    Callback = function()
+        setclipboard(keyLink)  -- Copy the link to clipboard
+        OrionLib:MakeNotification({
+            Name = "Link Copied",
+            Content = "The key link has been copied to your clipboard!",
+            Image = "rbxassetid://6031075938",
+            Time = 3
+        })
     end
 })
 
